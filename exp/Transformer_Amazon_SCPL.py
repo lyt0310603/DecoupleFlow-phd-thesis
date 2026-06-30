@@ -38,7 +38,7 @@ def get_args():
     parser.add_argument(
         '--category',
         type=str,
-        default='raw_review_Subscription_Boxes',
+        default='raw_review_Books',
         help='Parquet filename without extension, e.g. raw_review_Books.',
     )
     parser.add_argument('--val_split_ratio', type=float, default=0.1)
