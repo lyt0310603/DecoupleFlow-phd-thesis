@@ -26,6 +26,7 @@ def get_args():
     parser.add_argument('--epochs', type=int, default=50)
     parser.add_argument('--lr', type=float, default=0.0001)
     parser.add_argument('--save_path', type=str, default=None)
+    parser.add_argument('--max_len', type=str, default=None)
     parser.add_argument('--seed', type=int, default=42, choices=[41, 42, 43, 44, 45])
 
     args = parser.parse_args()
@@ -45,15 +46,15 @@ def set_seed(seed):
         torch.backends.cudnn.benchmark = False
     os.environ['PYTHONHASHSEED'] = str(seed)
 
-def get_dataloader(dataset, batch_size):
+def get_dataloader(dataset, batch_size, max_len):
     args = {}
     args['dataset'] = dataset
     if dataset == 'ag_news':
-        args['max_len'] = 60
+        args['max_len'] = 60 if max_len is None else int(max_len)
     elif dataset == 'imdb':
-        args['max_len'] = 350
+        args['max_len'] = 350 if max_len is None else int(max_len)
     elif dataset == 'dbpedia_14':
-        args['max_len'] = 400
+        args['max_len'] = 400 if max_len is None else int(max_len)
     args['train_bsz'] = batch_size
     args['test_bsz'] = batch_size
     args['noise_rate'] = 0
@@ -248,7 +249,9 @@ def DecoupleFlow_eval(model, testloader):
 if __name__ == '__main__':
     args = get_args()
     set_seed(args.seed)
-    trainloader, testloader, n_classes, vocab, word_vec, max_len = get_dataloader(args.dataset, args.batch_size)
+    trainloader, testloader, n_classes, vocab, word_vec, max_len = get_dataloader(
+        args.dataset, args.batch_size, args.max_len
+    )
     model = get_model(n_classes, args, word_vec, len(vocab), max_len)
 
     if args.arch == 'BP':
