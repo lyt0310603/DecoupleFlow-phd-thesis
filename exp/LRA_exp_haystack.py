@@ -20,7 +20,6 @@ def get_args():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--model', type=str, default='LSTM', choices=['LSTM'])
-    parser.add_argument('--dataset', type=str, default='contractnli', choices=['ag_news', 'imdb', 'dbpedia_14', 'hyperpartisan', 'haystack', 'contractnli', 'emotion_semisynth'])
     parser.add_argument('--batch_size', type=int, default=32, choices=[32, 64, 128, 256, 512, 1024])
     parser.add_argument('--arch', type=str, default='BP', choices=['BP', 'SCPL', 'DeInfo'])
     parser.add_argument('--epochs', type=int, default=50)
@@ -48,23 +47,10 @@ def set_seed(seed):
 def bytes_to_gb(bytes_val):
     return bytes_val / (1024**3)
 
-def get_dataloader(dataset, batch_size, max_len):
+def get_dataloader(batch_size, max_len):
     args = {}
-    args['dataset'] = dataset
-    if dataset == 'ag_news':
-        args['max_len'] = 60 if max_len is None else int(max_len)
-    elif dataset == 'imdb':
-        args['max_len'] = 350 if max_len is None else int(max_len)
-    elif dataset == 'dbpedia_14':
-        args['max_len'] = 400 if max_len is None else int(max_len)
-    elif dataset == 'hyperpartisan':
-        args['max_len'] = 500 if max_len is None else int(max_len)
-    elif dataset == 'haystack':
-        args['max_len'] = 500 if max_len is None else int(max_len)
-    elif dataset == 'contractnli':
-        args['max_len'] = 512 if max_len is None else int(max_len)
-    elif dataset == 'emotion_semisynth':
-        args['max_len'] = 1600 if max_len is None else int(max_len)
+    args['dataset'] = 'haystack'
+    args['max_len'] = 500 if max_len is None else int(max_len)
     args['train_bsz'] = batch_size
     args['test_bsz'] = batch_size
     args['noise_rate'] = 0
@@ -262,7 +248,6 @@ if __name__ == '__main__':
     args = get_args()
     set_seed(42)
     trainloader, testloader, n_classes, vocab, word_vec, max_len = get_dataloader(
-        args.dataset,
         args.batch_size,
         args.max_len
     )
