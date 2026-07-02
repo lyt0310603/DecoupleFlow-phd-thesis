@@ -23,7 +23,6 @@ DecoupleFlow-thesis/
 │   ├── Adaptive_exp.py
 │   ├── Vision_exp.py
 │   └── Vision_exp_gpipe.py
-└── data/                  # Preprocessed data (e.g. amazon_review/)
 ```
 
 All scripts under `exp/` add the project root to `sys.path`. Run them from the repo root:
