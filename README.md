@@ -1,6 +1,6 @@
-# DecoupleFlow-phd-thesis
+# DecoupleFlow-thesis
 
-Implementation and experiment scripts for **DecoupleFlow**, a decoupled multi-GPU training framework developed for PhD thesis research.
+Implementation and experiment scripts for **DecoupleFlow**, a decoupled multi-GPU training framework developed for thesis research.
 
 DecoupleFlow splits a deep model into blocks across GPUs and trains each block with **local losses**. It supports SCPL (`loss_fn='CL'`), DeInfo (`loss_fn='DeInfo'`), and adaptive early-exit inference.
 
@@ -9,7 +9,7 @@ This repository bundles the core `DecoupleFlow/` package with thesis experiment 
 ## Project Structure
 
 ```
-DecoupleFlow-phd-thesis/
+DecoupleFlow-thesis/
 ├── DecoupleFlow/          # Core package (model, loss, projector, data utils)
 ├── exp/                   # Experiment scripts
 │   ├── Amazon_review_preprocess.py
